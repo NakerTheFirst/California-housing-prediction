@@ -94,3 +94,10 @@ target/
 
 # exclude data from source control by default
 # /data/
+
+# exlude references directory
+/references/
+
+# exclude claude folder and documentation
+.claude
+CLAUDE.md

@@ -8,7 +8,7 @@ These features help improve model performance by capturing relationships between
 import pandas as pd
 import numpy as np
 from typing import Optional
-from src.config import INCOME_CATEGORIES, AGE_CATEGORIES
+from config import INCOME_CATEGORIES, AGE_CATEGORIES
 
 
 def create_rooms_per_household(data: pd.DataFrame) -> pd.DataFrame:

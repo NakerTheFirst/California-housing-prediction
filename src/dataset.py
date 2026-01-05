@@ -12,12 +12,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional, Union
 
-from src.config import (
+from config import (
     RAW_DATA_PATH, INTERIM_DATA_PATH, PROCESSED_DATA_PATH,
     OUTLIER_METHOD, OUTLIER_THRESHOLD, MISSING_VALUE_STRATEGY,
     DATA_DIR
 )
-from src.features import apply_all_features
+from features import apply_all_features
 
 
 class HousingDataProcessor:
@@ -61,8 +61,8 @@ class HousingDataProcessor:
             Exception: If data loading fails
         """
         try:
-            # Load California housing dataset
-            housing = fetch_california_housing(as_frame=True)
+            # Try to load from sklearn cache or download with alternative method
+            housing = fetch_california_housing(as_frame=True, download_if_missing=True)
 
             # Combine features and target into single DataFrame
             self.data = pd.DataFrame(housing.data, columns=housing.feature_names)
@@ -96,7 +96,47 @@ class HousingDataProcessor:
             return self.data
 
         except Exception as e:
-            raise Exception(f"Failed to load housing data: {str(e)}")
+            # Fallback: try loading without downloading
+            print(f"⚠ Warning: {str(e)}")
+            print("Attempting alternative data loading method...")
+            try:
+                # Try loading from local sklearn cache
+                from sklearn.datasets import fetch_california_housing
+                import os
+                os.environ['SCIKIT_LEARN_DATA'] = str(DATA_DIR / 'sklearn_cache')
+                housing = fetch_california_housing(as_frame=True, download_if_missing=False)
+
+                self.data = pd.DataFrame(housing.data, columns=housing.feature_names)
+                self.data['median_house_value'] = housing.target * 100000
+
+                # Process as before
+                self.data.columns = [
+                    'median_income', 'housing_median_age', 'avg_rooms', 'avg_bedrooms',
+                    'population', 'avg_occupancy', 'latitude', 'longitude', 'median_house_value'
+                ]
+                self.data['households'] = (self.data['population'] / self.data['avg_occupancy']).round()
+                self.data['total_rooms'] = (self.data['avg_rooms'] * self.data['households']).round()
+                self.data['total_bedrooms'] = (self.data['avg_bedrooms'] * self.data['households']).round()
+                self.data = self.data.drop(columns=['avg_rooms', 'avg_bedrooms', 'avg_occupancy'])
+                self.data = self.data[[
+                    'longitude', 'latitude', 'housing_median_age',
+                    'total_rooms', 'total_bedrooms', 'population', 'households',
+                    'median_income', 'median_house_value'
+                ]]
+                return self.data
+            except:
+                # Last resort: download CSV directly
+                print("Downloading from alternative source...")
+                try:
+                    url = "https://raw.githubusercontent.com/ageron/handson-ml/master/datasets/housing/housing.csv"
+                    self.data = pd.read_csv(url)
+                    # CSV already has correct column names and values in dollars
+                    print(f"Data loaded successfully: {self.data.shape[0]} rows, {self.data.shape[1]} columns")
+                    return self.data
+                except:
+                    raise Exception(f"Failed to load housing data. Download manually from:\n"
+                                  f"https://www.kaggle.com/datasets/camnugent/california-housing-prices\n"
+                                  f"Save to: {RAW_DATA_PATH}")
 
     def get_data_info(self) -> dict:
         """

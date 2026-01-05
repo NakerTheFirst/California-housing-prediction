@@ -15,11 +15,15 @@ from pathlib import Path
 from typing import Tuple, Dict, Optional
 
 from sklearn.model_selection import train_test_split
-from sklearn.linear_regression import LinearRegression
+from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
-from src.config import (
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from config import (
     MODEL_PATH, SCALER_PATH, METRICS_PATH,
     FEATURE_COLUMNS, TARGET_COLUMN,
     RANDOM_STATE, TEST_SIZE,
@@ -191,7 +195,7 @@ class PricePredictionModel:
         # Calculate training score
         train_score = self.model.score(X_train_scaled, y_train)
 
-        print(f"Model trained successfully!")
+        print("Model trained successfully!")
         print(f"Training R² score: {train_score:.4f}")
 
     def evaluate(self, X_test: pd.DataFrame = None, y_test: pd.Series = None) -> Dict:

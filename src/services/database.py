@@ -9,8 +9,11 @@ import sqlite3
 import pandas as pd
 from pathlib import Path
 from typing import Optional, Union, Tuple
+import sys
 
-from src.config import DATABASE_PATH
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from config import DATABASE_PATH
 
 
 class DatabaseManager:

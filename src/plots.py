@@ -11,8 +11,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 from typing import Optional, List, Dict
+import sys
 
-from src.config import (
+sys.path.insert(0, str(Path(__file__).parent))
+
+from config import (
     FIGURES_DIR, FIGURE_SIZE, FIGURE_DPI,
     PLOT_STYLE, TARGET_COLUMN
 )

@@ -9,10 +9,13 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 from typing import Dict, Union
+import sys
 
-from src.modeling.train import PricePredictionModel
-from src.config import MODEL_PATH, SCALER_PATH, METRICS_PATH
-from src.features import (
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from modeling.train import PricePredictionModel
+from config import MODEL_PATH, SCALER_PATH, METRICS_PATH
+from features import (
     create_rooms_per_household,
     create_bedrooms_per_room,
     create_population_per_household,

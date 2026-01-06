@@ -13,8 +13,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from config import DATABASE_PATH
-
+from src.config import DATABASE_PATH
 
 class DatabaseManager:
     """
@@ -335,7 +334,7 @@ class DatabaseManager:
         try:
             query = """
                 SELECT
-                    h.id,
+                    h.ROWID as id,
                     h.longitude,
                     h.latitude,
                     h.median_income,

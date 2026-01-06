@@ -94,6 +94,11 @@ def main():
     count = db.get_table_count('housing')
     print(f"✓ Database verification: {count:,} records")
 
+    # Populate district_summary table
+    print("\nPopulating district_summary table...")
+    summary_rows = db.populate_district_summary()
+    print(f"✓ Populated district_summary with {summary_rows} income categories")
+
     db.close_connection()
 
     # Step 3: Generate visualizations

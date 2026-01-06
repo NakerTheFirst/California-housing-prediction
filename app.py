@@ -61,7 +61,6 @@ def load_trained_model():
         return None
 
 
-@st.cache_resource
 def get_database_connection():
     """Get database connection."""
     try:
@@ -208,10 +207,12 @@ def show_data_exploration():
     # Check if database has data
     try:
         housing_count = db.get_table_count('housing')
+        st.info(f"Debug: Housing table has {housing_count} records")
         if housing_count == 0:
             st.warning("Database is empty. Please populate it by running the data processing pipeline.")
             return
-    except:
+    except Exception as e:
+        st.error(f"Error checking database: {str(e)}")
         st.warning("Database tables not created yet.")
         return
 
@@ -233,11 +234,14 @@ WHERE median_income >= ? AND median_income <= ?
 
         if st.button("Run WHERE Query"):
             try:
+                st.info(f"Debug: Attempting query with income range {min_income} to {max_income}")
                 result = db.filter_by_income(min_income, max_income)
-                st.write(f"Found {len(result)} records")
+                st.success(f"✅ Query successful! Found {len(result)} records")
                 st.dataframe(result.head(20), use_container_width=True)
             except Exception as e:
-                st.error(f"Error: {str(e)}")
+                st.error(f"❌ Query failed: {str(e)}")
+                import traceback
+                st.code(traceback.format_exc())
 
     with tab2:
         st.markdown("#### GROUP BY Aggregation Example")

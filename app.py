@@ -344,7 +344,9 @@ def show_visualizations():
         # Display all figures in a grid
         for i, fig_path in enumerate(figure_files, 1):
             st.markdown(f"### {i}. {fig_path.stem.replace('_', ' ').title()}")
-            st.image(str(fig_path))
+            # Convert to relative path or use open() to read image
+            with open(fig_path, 'rb') as img_file:
+                st.image(img_file)
             st.markdown("---")
 
     with viz_tabs[1]:
@@ -353,7 +355,8 @@ def show_visualizations():
         for pattern in ['histogram', 'boxplot', 'violin', 'density']:
             matching = [f for f in figure_files if pattern in f.name.lower()]
             for fig_path in matching:
-                st.image(str(fig_path))
+                with open(fig_path, 'rb') as img_file:
+                    st.image(img_file)
 
     with viz_tabs[2]:
         st.subheader("🔗 Relationship Plots")
@@ -361,28 +364,32 @@ def show_visualizations():
         for pattern in ['scatter', 'pairplot', 'line']:
             matching = [f for f in figure_files if pattern in f.name.lower()]
             for fig_path in matching:
-                st.image(str(fig_path))
+                with open(fig_path, 'rb') as img_file:
+                    st.image(img_file)
 
     with viz_tabs[3]:
         st.subheader("🔥 Correlation Analysis")
         # Show heatmap
         matching = [f for f in figure_files if 'heatmap' in f.name.lower() or 'correlation' in f.name.lower()]
         for fig_path in matching:
-            st.image(str(fig_path))
+            with open(fig_path, 'rb') as img_file:
+                st.image(img_file)
 
     with viz_tabs[4]:
         st.subheader("📊 Comparison Charts")
         # Show bar charts
         matching = [f for f in figure_files if 'bar' in f.name.lower()]
         for fig_path in matching:
-            st.image(str(fig_path))
+            with open(fig_path, 'rb') as img_file:
+                st.image(img_file)
 
     with viz_tabs[5]:
         st.subheader("🗺️ Geographic Visualization")
         # Show geographic scatter
         matching = [f for f in figure_files if 'geographic' in f.name.lower()]
         for fig_path in matching:
-            st.image(str(fig_path))
+            with open(fig_path, 'rb') as img_file:
+                st.image(img_file)
 
     # Model performance plots
     st.markdown("---")
@@ -391,7 +398,8 @@ def show_visualizations():
     model_plots = [f for f in figure_files if 'model' in f.name.lower() or 'predictions' in f.name.lower() or 'residuals' in f.name.lower()]
     if len(model_plots) > 0:
         for fig_path in model_plots:
-            st.image(str(fig_path))
+            with open(fig_path, 'rb') as img_file:
+                st.image(img_file)
     else:
         st.info("Model performance plots will appear here after training the model.")
 

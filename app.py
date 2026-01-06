@@ -344,9 +344,9 @@ def show_visualizations():
         # Display all figures in a grid
         for i, fig_path in enumerate(figure_files, 1):
             st.markdown(f"### {i}. {fig_path.stem.replace('_', ' ').title()}")
-            # Convert to relative path or use open() to read image
+            # Read image bytes to avoid path resolution issues
             with open(fig_path, 'rb') as img_file:
-                st.image(img_file)
+                st.image(img_file.read())
             st.markdown("---")
 
     with viz_tabs[1]:
@@ -356,7 +356,7 @@ def show_visualizations():
             matching = [f for f in figure_files if pattern in f.name.lower()]
             for fig_path in matching:
                 with open(fig_path, 'rb') as img_file:
-                    st.image(img_file)
+                    st.image(img_file.read())
 
     with viz_tabs[2]:
         st.subheader("🔗 Relationship Plots")
@@ -365,7 +365,7 @@ def show_visualizations():
             matching = [f for f in figure_files if pattern in f.name.lower()]
             for fig_path in matching:
                 with open(fig_path, 'rb') as img_file:
-                    st.image(img_file)
+                    st.image(img_file.read())
 
     with viz_tabs[3]:
         st.subheader("🔥 Correlation Analysis")
@@ -373,7 +373,7 @@ def show_visualizations():
         matching = [f for f in figure_files if 'heatmap' in f.name.lower() or 'correlation' in f.name.lower()]
         for fig_path in matching:
             with open(fig_path, 'rb') as img_file:
-                st.image(img_file)
+                st.image(img_file.read())
 
     with viz_tabs[4]:
         st.subheader("📊 Comparison Charts")
@@ -381,7 +381,7 @@ def show_visualizations():
         matching = [f for f in figure_files if 'bar' in f.name.lower()]
         for fig_path in matching:
             with open(fig_path, 'rb') as img_file:
-                st.image(img_file)
+                st.image(img_file.read())
 
     with viz_tabs[5]:
         st.subheader("🗺️ Geographic Visualization")
@@ -389,7 +389,7 @@ def show_visualizations():
         matching = [f for f in figure_files if 'geographic' in f.name.lower()]
         for fig_path in matching:
             with open(fig_path, 'rb') as img_file:
-                st.image(img_file)
+                st.image(img_file.read())
 
     # Model performance plots
     st.markdown("---")
@@ -399,7 +399,7 @@ def show_visualizations():
     if len(model_plots) > 0:
         for fig_path in model_plots:
             with open(fig_path, 'rb') as img_file:
-                st.image(img_file)
+                st.image(img_file.read())
     else:
         st.info("Model performance plots will appear here after training the model.")
 

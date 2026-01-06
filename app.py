@@ -347,7 +347,12 @@ def show_visualizations():
 
         # Display all figures in a grid
         for i, fig_path in enumerate(figure_files, 1):
-            st.markdown(f"### {i}. {fig_path.stem.replace('_', ' ').title()}")
+            # Remove numeric prefix (e.g., "01_", "02_") from filename
+            title = fig_path.stem
+            if '_' in title and title.split('_')[0].isdigit():
+                title = '_'.join(title.split('_')[1:])
+            title = title.replace('_', ' ').title()
+            st.markdown(f"### {i}. {title}")
             # Read image bytes to avoid path resolution issues
             with open(fig_path, 'rb') as img_file:
                 st.image(img_file.read())

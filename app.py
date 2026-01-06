@@ -4,24 +4,32 @@ California Housing Price Prediction - Streamlit Dashboard.
 This is the main entry point for the interactive web application.
 """
 
-import streamlit as st
-import pandas as pd
-import numpy as np
-from pathlib import Path
 import sys
+from pathlib import Path
+
+import pandas as pd
+import streamlit as st
 
 # Add src to path for imports
 sys.path.append(str(Path(__file__).parent))
 
 from src.config import (
-    STREAMLIT_TITLE, STREAMLIT_LAYOUT, STREAMLIT_SIDEBAR_STATE,
-    PROCESSED_DATA_PATH, FIGURES_DIR, DATABASE_PATH,
-    MIN_LONGITUDE, MAX_LONGITUDE, MIN_LATITUDE, MAX_LATITUDE,
-    MIN_HOUSING_AGE, MAX_HOUSING_AGE, MIN_INCOME, MAX_INCOME
+    FIGURES_DIR,
+    MAX_HOUSING_AGE,
+    MAX_INCOME,
+    MAX_LATITUDE,
+    MAX_LONGITUDE,
+    MIN_HOUSING_AGE,
+    MIN_INCOME,
+    MIN_LATITUDE,
+    MIN_LONGITUDE,
+    PROCESSED_DATA_PATH,
+    STREAMLIT_LAYOUT,
+    STREAMLIT_SIDEBAR_STATE,
+    STREAMLIT_TITLE,
 )
-from src.services.database import DatabaseManager
 from src.modeling.predict import PredictionInterface
-
+from src.services.database import DatabaseManager
 
 # Page configuration
 st.set_page_config(

@@ -5,17 +5,22 @@ This module contains the HousingDataProcessor class for loading, cleaning,
 and preprocessing California housing data.
 """
 
-import pandas as pd
-import numpy as np
-from sklearn.datasets import fetch_california_housing
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Union
 
+import numpy as np
+import pandas as pd
+from sklearn.datasets import fetch_california_housing
+
 from config import (
-    RAW_DATA_PATH, INTERIM_DATA_PATH, PROCESSED_DATA_PATH,
-    OUTLIER_METHOD, OUTLIER_THRESHOLD, MISSING_VALUE_STRATEGY,
-    DATA_DIR
+    DATA_DIR,
+    INTERIM_DATA_PATH,
+    MISSING_VALUE_STRATEGY,
+    OUTLIER_METHOD,
+    OUTLIER_THRESHOLD,
+    PROCESSED_DATA_PATH,
+    RAW_DATA_PATH,
 )
 from features import apply_all_features
 
@@ -101,8 +106,9 @@ class HousingDataProcessor:
             print("Attempting alternative data loading method...")
             try:
                 # Try loading from local sklearn cache
-                from sklearn.datasets import fetch_california_housing
                 import os
+
+                from sklearn.datasets import fetch_california_housing
                 os.environ['SCIKIT_LEARN_DATA'] = str(DATA_DIR / 'sklearn_cache')
                 housing = fetch_california_housing(as_frame=True, download_if_missing=False)
 

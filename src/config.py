@@ -6,7 +6,6 @@ used throughout the project. All other modules should import from this file
 to ensure consistency.
 """
 
-import os
 from pathlib import Path
 
 # Base paths

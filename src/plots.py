@@ -5,20 +5,18 @@ This module contains the EDAAnalyser class for performing exploratory data analy
 and generating visualizations for the California housing dataset.
 """
 
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from pathlib import Path
-from typing import Optional, List, Dict
 import sys
+from pathlib import Path
+from typing import Dict, List
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from config import (
-    FIGURES_DIR, FIGURE_SIZE, FIGURE_DPI,
-    PLOT_STYLE, TARGET_COLUMN
-)
+from config import FIGURE_DPI, FIGURE_SIZE, FIGURES_DIR, PLOT_STYLE, TARGET_COLUMN
 
 
 class EDAAnalyser:
@@ -525,7 +523,7 @@ class EDAAnalyser:
             plots['geographic'] = str(self.figures_dir / '10_geographic_scatter_median_house_value.png')
 
             print("\n" + "="*50)
-            print(f"All visualizations generated successfully!")
+            print("All visualizations generated successfully!")
             print(f"Saved to: {self.figures_dir}")
             print("="*50)
 

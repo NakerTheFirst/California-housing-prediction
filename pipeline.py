@@ -18,11 +18,11 @@ from pathlib import Path
 # Add src to path
 sys.path.append(str(Path(__file__).parent / 'src'))
 
+from src.config import PROCESSED_DATA_PATH
 from src.dataset import HousingDataProcessor
-from src.services.database import DatabaseManager
 from src.modeling.train import PricePredictionModel
 from src.plots import EDAAnalyser
-from src.config import PROCESSED_DATA_PATH
+from src.services.database import DatabaseManager
 
 
 def main():
@@ -59,7 +59,7 @@ def main():
 
     # Save interim data
     processor.save_data(cleaned_data, 'interim')
-    print(f"✓ Cleaned data saved")
+    print("✓ Cleaned data saved")
 
     # Remove outliers
     print("\nRemoving outliers...")
@@ -144,7 +144,7 @@ def main():
 
     metrics = model.evaluate(X_test, y_test)
 
-    print(f"\nModel Performance Metrics:")
+    print("\nModel Performance Metrics:")
     print(f"  RMSE: ${metrics['rmse']:,.2f}")
     print(f"  MAE:  ${metrics['mae']:,.2f}")
     print(f"  R²:   {metrics['r2']:.4f}")
@@ -170,7 +170,7 @@ def main():
     print("\nData Summary:")
     print(f"  Total records: {processed_data.shape[0]:,}")
     print(f"  Features: {processed_data.shape[1] - 1}")
-    print(f"  Target: median_house_value")
+    print("  Target: median_house_value")
 
     print("\nNext Steps:")
     print("  1. Run: streamlit run app.py")
@@ -187,7 +187,7 @@ if __name__ == "__main__":
         print("\n\n⚠ Pipeline interrupted by user")
         sys.exit(1)
     except Exception as e:
-        print(f"\n\n❌ Pipeline failed with error:")
+        print("\n\n❌ Pipeline failed with error:")
         print(f"   {type(e).__name__}: {str(e)}")
         import traceback
         traceback.print_exc()

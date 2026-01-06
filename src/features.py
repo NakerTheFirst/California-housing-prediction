@@ -5,10 +5,12 @@ This module contains functions for creating derived features from the raw housin
 These features help improve model performance by capturing relationships between variables.
 """
 
-import pandas as pd
-import numpy as np
 from typing import Optional
-from config import INCOME_CATEGORIES, AGE_CATEGORIES
+
+import numpy as np
+import pandas as pd
+
+from config import AGE_CATEGORIES, INCOME_CATEGORIES
 
 
 def create_rooms_per_household(data: pd.DataFrame) -> pd.DataFrame:

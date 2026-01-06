@@ -6,14 +6,16 @@ database operations for the California housing prediction project.
 """
 
 import sqlite3
-import pandas as pd
-from pathlib import Path
-from typing import Optional, Union, Tuple
 import sys
+from pathlib import Path
+from typing import Optional, Union
+
+import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.config import DATABASE_PATH
+
 
 class DatabaseManager:
     """
@@ -153,7 +155,7 @@ class DatabaseManager:
             rows_inserted = rows_after - rows_before
 
             print(f"Inserted {rows_after} rows into {table_name} table")
-            return rows_after
+            return rows_inserted
 
         except Exception as e:
             raise Exception(f"Failed to insert data: {str(e)}")

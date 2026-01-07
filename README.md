@@ -215,7 +215,7 @@ Features:
 - **R²:** ~0.58-0.62 (model explains 58-62% of variance)
 - **MAE:** ~$48,000-53,000 (average absolute error)
 
-### Key Findings
+### Findings
 - **Median income** is the strongest predictor of house prices
 - **Geographic location** (latitude/longitude) significantly impacts prices
 - **Engineered features** (rooms per household, population density) improve model performance
@@ -224,12 +224,6 @@ Features:
   - Geographic clustering effects
   - Presence of outliers in price distribution
 
-### Generated Artifacts
-- **12 visualizations** in `reports/figures/`
-- **SQLite database** (1.7 MB) with 20,390 records
-- **3 model files** (model, scaler, metrics)
-- **Interactive dashboard** for exploration and predictions
-
 ## Configuration
 
 Key settings in `src/config.py`:
@@ -237,16 +231,6 @@ Key settings in `src/config.py`:
 - `RANDOM_STATE = 42` (reproducibility)
 - `OUTLIER_THRESHOLD = 1.5` (IQR multiplier)
 - `MISSING_VALUE_STRATEGY = 'median'` (imputation method)
-
-## Dependencies
-
-Core libraries (see `requirements.txt`):
-- pandas 2.1.0 - Data manipulation
-- numpy 1.25.0 - Numerical operations
-- scikit-learn 1.3.0 - ML algorithms
-- streamlit 1.40.0 - Web dashboard
-- seaborn 0.12.2 - Visualizations
-- matplotlib 3.7.2 - Plotting
 
 ## Project Workflow
 
@@ -268,16 +252,3 @@ python -c "from src.services.database import DatabaseManager; DatabaseManager().
 python pipeline.py       # Execute complete ETL + training pipeline
 streamlit run app.py     # Launch web interface
 ```
-
-## Course Requirements Met
-
-- ✅ Data wrangling with pandas/numpy
-- ✅ SQL integration (WHERE, GROUP BY, INNER JOIN)
-- ✅ 10 distinct visualization types
-- ✅ Object-oriented programming (5 classes)
-- ✅ Interactive Streamlit dashboard
-- ✅ Linear regression with evaluation metrics
-
-## License
-
-Educational project for Data Science Master's programme.
